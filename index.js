@@ -1,12 +1,33 @@
 let balance = 500.00;
 
+class Account {
+  constructor(username) {
+    this.username = username;
+    this.transactions = [];
+    
+  }
+  
+  get balance(){
+    let balance = 0;
+    for (let transaction of this.transactions) {
+      balance += transaction.value;
+    };
+    return balance;
+  }
+
+  addTransaction(transaction){
+    this.transactions.push(transaction);
+  }
+}
+
 class Transaction {
   constructor(amount, account) {
     this.amount = amount;
     this.account = account
   }
   commit() {
-    this.account.balance += this.value;
+    this.time = new Date();
+    this.account.addTransaction(this);  
   }
 }
 
@@ -23,13 +44,7 @@ class Deposit extends Transaction {
 
 }
 
-class Account {
-  constructor(username) {
-    this.username = username;
-    this.balance = 0;
-  }
 
-}
 
 const myAccount = new Account("snow-patrol");
 
@@ -62,6 +77,7 @@ const t2 = new Withdrawal(50.00, billBo);
 t2.commit();
 
 console.log('Final Balance:', billBo.balance);
+console.log(billBo);
 
 
 
